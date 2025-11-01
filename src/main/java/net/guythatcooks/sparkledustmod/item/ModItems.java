@@ -3,10 +3,12 @@
 
 // Deffered Register is how items work
 
+
 package net.guythatcooks.sparkledustmod.item;
 
 import net.guythatcooks.sparkledustmod.SparkleDustMod;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -20,9 +22,40 @@ public class ModItems {
     // with just  this command its in the game, but its missing a texture, en_us.lang name, its not in a creativetab, it has no recipe
 
     public static final DeferredItem<Item> SPARKLEDUST = ITEMS.register("sparkledust",
-            () -> new Item(new Item.Properties()));
+            () -> new CustomSparkleEffect(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.RARE)
+                    .fireResistant()
+            )
+    );
+
+    public static final DeferredItem<Item> GUIDE_CRYSTAL = ITEMS.register("guidecrystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.EPIC)
+                    .fireResistant()
+            )
+    );
+
+    public static final DeferredItem<Item> BOWTIE = ITEMS.register("bowtie",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.RARE)
+                    .fireResistant()
+            )
+    );
+
+    public static final DeferredItem<Item> SPARKLE_WAND = ITEMS.register("sparkle_wand",
+            () -> new CustomWandEffect(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(200)
+                    .rarity(Rarity.RARE)
+                    .fireResistant()
+            )
+    );
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
+
     }
 }
