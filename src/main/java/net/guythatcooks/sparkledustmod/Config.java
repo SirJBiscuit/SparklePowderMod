@@ -1,4 +1,4 @@
-package net.guythatcooks.sparklemod;
+package net.guythatcooks.sparkledustmod;
 
 import java.util.List;
 

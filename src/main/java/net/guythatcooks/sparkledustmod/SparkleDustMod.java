@@ -1,5 +1,7 @@
-package net.guythatcooks.sparklemod;
+package net.guythatcooks.sparkledustmod;
 
+import net.guythatcooks.sparkledustmod.item.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
 import org.slf4j.Logger;
 
 import net.neoforged.bus.api.IEventBus;
@@ -15,13 +17,13 @@ import org.slf4j.LoggerFactory;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 // This part here @Mod(MatchYourModId.MODID) tells neoforge this is your main mod class
-@Mod(SparkleMod.MODID)
-public class SparkleMod {
+@Mod(SparkleDustMod.MODID)
+public class SparkleDustMod {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "gtcsparklemod";
+    public static final String MODID = "sparkledustmod";
     // Directly reference a slf4j logger
     //public static final Logger LOGGER = LogUtils.getLogger();
-    public static final Logger LOGGER = LoggerFactory.getLogger(SparkleMod.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(SparkleDustMod.class);
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
 
@@ -34,13 +36,14 @@ public class SparkleMod {
      // - FMLClientSetupEvent - runs only on the client
      // - FMLDedicatedServerSetupEvent - runs only on dedicated servers
 
-    public SparkleMod(IEventBus modEventBus, ModContainer modContainer) {
+    public SparkleDustMod(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
+        ModItems.register(modEventBus);
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
@@ -53,7 +56,9 @@ public class SparkleMod {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.SPARKLEDUST);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
